@@ -1,0 +1,15 @@
+# set up username va email
+git config --global user.name "neptune-nminhthuv"
+git config --global user.email "nmthuv23807@gmail.com"
+
+# khong set username va email nua
+git config --global --unset user.name
+git config --global --unset user.email
+
+git config --global user.name
+git config --global user.email
+
+
+neptune-nminhthuv
+
+nmthuv23807@gmail.com
