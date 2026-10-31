@@ -1,0 +1,86 @@
+package com.example.myapplication
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+
+class MainActivity : ComponentActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContent {
+            var note by rememberSaveable {
+                mutableStateOf("")
+            }
+
+            var result by rememberSaveable {
+                mutableStateOf("")
+            }
+
+            MaterialTheme {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(24.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+
+                    Text(
+                        text = "Ghi chú học tập",
+                        style = MaterialTheme.typography.headlineMedium
+                    )
+
+                    OutlinedTextField(
+                        value = note,
+                        onValueChange = {
+                            note = it
+                        },
+                        label = {
+                            Text("Nội dung ghi chú")
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                        minLines = 4
+                    )
+
+                    Button(
+                        onClick = {
+                            val count = if (note.isBlank()) {
+                                0
+                            } else {
+                                note.trim()
+                                    .split(Regex("\\s+"))
+                                    .size
+                            }
+
+                            result = "Số từ trong ghi chú: $count"
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("Đếm số từ")
+                    }
+
+                    Text(
+                        text = result,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+
+                    Button(
+                        onClick = {
+                            result = "Chức năng chia sẻ sẽ được bổ sung bằng FileProvider."
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("Chia sẻ ghi chú")
+                    }
+                }
+            }
+        }
+    }
+}
